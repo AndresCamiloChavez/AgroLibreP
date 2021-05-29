@@ -54,6 +54,30 @@ public class MySQL {
         return estatus;
     }
     
+    public int inserDataProducto(String nombreTabla , String nombreProducto, double precio, String descripcion , String cantidad, String codigo, String email ){
+    
+    int estatus = 0;
+        try{
+            
+            String Query = "INSERT INTO "+ nombreTabla+ " VALUES("
+                     + "\"" + codigo + "\", "
+                    + "\"" + nombreProducto + "\", "
+                    + "\"" + precio + "\", "
+                    + "\"" + descripcion + "\", "
+                    + "\"" + cantidad+ "\", "
+                    + "\"" + email+ "\")";
+            
+            Statement statement = Conexion.createStatement();
+            statement.executeUpdate(Query);
+            estatus = 1;
+        }catch(SQLException e){
+             System.out.println("ERRROR = "+ e.toString());
+            estatus = 0; // no deberia pasar
+            
+        }
+        return estatus;
+    
+    }
     public Usuario getUser ( String nombreTabla, String email, String password){
         Usuario usuario = null; // aun no existe
         try{

@@ -13,6 +13,7 @@ public class LoginPage extends javax.swing.JFrame {
     boolean visible = false;
     Color colorPrimario = new Color(0, 105,93);    
     Color colorLetra = new Color(51, 51,51);
+    public static Usuario usuario;
 
     
 
@@ -267,16 +268,13 @@ public class LoginPage extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
 
-        jTextField1.setText("ingrese apellido");
         jTextField1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        jPasswordRegister.setText("jPasswordField1");
         jPasswordRegister.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setText("Nombre");
 
-        jTextField3.setText("ingrese nombre");
         jTextField3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jTextField3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,7 +289,6 @@ public class LoginPage extends javax.swing.JFrame {
 
         jSeparator6.setForeground(new java.awt.Color(0, 105, 93));
 
-        jTextField5.setText("ingrese apellido");
         jTextField5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         jSeparator7.setForeground(new java.awt.Color(0, 105, 93));
@@ -304,7 +301,6 @@ public class LoginPage extends javax.swing.JFrame {
 
         jSeparator8.setForeground(new java.awt.Color(0, 105, 93));
 
-        jTextField4.setText("ingrese teléfono");
         jTextField4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -540,6 +536,7 @@ public class LoginPage extends javax.swing.JFrame {
         MySQL miDB = new MySQL();
         miDB.MySQLConnection("root", "", "pruebaagro");
         
+        
         String tabla = "usuario";
         
         String nombre = jTextField3.getText();
@@ -549,14 +546,18 @@ public class LoginPage extends javax.swing.JFrame {
         String password = jPasswordRegister.getText();
         
         boolean existe = miDB.verificarUsuario(tabla, email);
-        if(!existe){
+        
+        if(!nombre.isEmpty() && !apellido.isEmpty() && !telefono.isEmpty() && !email.isEmpty() && !password.isEmpty()){
+            if(!existe){
             int estado = miDB.insertData(tabla, nombre, apellido, email, password, telefono);    
+            
+            
             
             jLabel12.setForeground(colorLetra);
             jSeparator7.setForeground(colorPrimario);
             
               if(telefono.length() <= 10){
-                jLabel11.setForeground(Color.black);
+                jLabel11.setForeground(colorLetra);
                 jSeparator8.setForeground(colorPrimario);
             
           
@@ -565,11 +566,11 @@ public class LoginPage extends javax.swing.JFrame {
                 senalizacionRojo(jLabel1, jSeparator1, Color.red);
                 
                 }else if(estado == 1){
-                    jTextField3.setText("Ingrese Nombre");
-                    jTextField4.setText("Ingrese Telefono");
-                    jTextField1.setText("Ingrese Apellido");
-                    jTextField5.setText("Ingrese Emaill");
-                    jPasswordRegister.setText("password");
+                    jTextField3.setText("");
+                    jTextField4.setText("");
+                    jTextField1.setText("");
+                    jTextField5.setText("");
+                    jPasswordRegister.setText("");
                 
                     JOptionPane.showMessageDialog(this,"Usuario registrado con exito!! ", "Estado", JOptionPane.INFORMATION_MESSAGE);
                 
@@ -594,6 +595,14 @@ public class LoginPage extends javax.swing.JFrame {
             senalizacionRojo(jLabel12, jSeparator7, Color.red);
             JOptionPane.showMessageDialog(this,"ERROR, Usuario ya existe", "Estado", JOptionPane.ERROR_MESSAGE);
         }
+          
+           
+        }else{
+            System.out.println("Hay campos vacios");
+            JOptionPane.showMessageDialog(this,"ERROR, Hay campos vacios por favor revise. Intente de nuevo", "Estado", JOptionPane.ERROR_MESSAGE);
+        } 
+        
+        
         miDB.closeConnection();
     }//GEN-LAST:event_jButtonRegistrarActionPerformed
 
@@ -613,13 +622,16 @@ public class LoginPage extends javax.swing.JFrame {
                 
                 jTextField2.setText("");
                 jPasswordInicia.setText("");
-                HomeTemp hometemp = new HomeTemp();
+                AddProductoPage addProcu = new AddProductoPage();
                 this.setVisible(false);
-                hometemp.setVisible(true);
+                addProcu.setVisible(true);
                 
                 jLabel5.setForeground(colorLetra);
                 jSeparator4.setForeground(colorPrimario);
                 
+                usuario = user;
+                
+                System.out.println("usuario"+ usuario.getEmail());
                 
             }else{
                 JOptionPane.showMessageDialog(this,"ERROR, Contraseña incorrecta. Intente de nuevo", "Estado", JOptionPane.ERROR_MESSAGE);

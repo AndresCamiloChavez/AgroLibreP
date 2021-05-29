@@ -553,7 +553,6 @@
               <SubComponents>
                 <Component class="javax.swing.JTextField" name="jTextField1">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ingrese apellido"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                         <EmptyBorder/>
@@ -563,7 +562,6 @@
                 </Component>
                 <Component class="javax.swing.JPasswordField" name="jPasswordRegister">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="jPasswordField1"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                         <EmptyBorder/>
@@ -581,7 +579,6 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextField3">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ingrese nombre"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                         <EmptyBorder/>
@@ -616,7 +613,6 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextField5">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ingrese apellido"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                         <EmptyBorder/>
@@ -656,7 +652,6 @@
                 </Component>
                 <Component class="javax.swing.JTextField" name="jTextField4">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="ingrese tel&#xe9;fono"/>
                     <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                       <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
                         <EmptyBorder/>
