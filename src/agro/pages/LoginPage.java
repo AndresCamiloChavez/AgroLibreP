@@ -50,6 +50,7 @@ public class LoginPage extends javax.swing.JFrame {
         jSeparator4 = new javax.swing.JSeparator();
         passswordVisible = new javax.swing.JLabel();
         jButton1Ingresar2 = new javax.swing.JButton();
+        jButtonRecuperar = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jButtonCrearCuenta = new javax.swing.JButton();
@@ -134,6 +135,18 @@ public class LoginPage extends javax.swing.JFrame {
             }
         });
 
+        jButtonRecuperar.setBackground(new java.awt.Color(255, 255, 255));
+        jButtonRecuperar.setForeground(new java.awt.Color(0, 105, 94));
+        jButtonRecuperar.setText("¿Olvido la Contraseña?");
+        jButtonRecuperar.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButtonRecuperar.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jButtonRecuperar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jButtonRecuperar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRecuperarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -153,6 +166,9 @@ public class LoginPage extends javax.swing.JFrame {
                         .addContainerGap(56, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButtonRecuperar, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jButton1Ingresar2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator4, javax.swing.GroupLayout.Alignment.LEADING))
@@ -180,7 +196,9 @@ public class LoginPage extends javax.swing.JFrame {
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jButton1Ingresar2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(51, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButtonRecuperar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
@@ -648,6 +666,16 @@ public class LoginPage extends javax.swing.JFrame {
         miDB.closeConnection();
     }//GEN-LAST:event_jButton1Ingresar2ActionPerformed
 
+    private void jButtonRecuperarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRecuperarActionPerformed
+        // TODO add your handling code here:
+        
+        RecuperarContraPage recuperar = new RecuperarContraPage();
+        
+        recuperar.setVisible(true);
+        this.setVisible(false);
+        
+    }//GEN-LAST:event_jButtonRecuperarActionPerformed
+
     private void senalizacionRojo(javax.swing.JLabel label,javax.swing.JSeparator separator, Color color){
        label.setForeground(color);
        separator.setForeground(color);
@@ -688,6 +716,7 @@ public class LoginPage extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1Ingresar2;
     private javax.swing.JButton jButtonCrearCuenta;
+    private javax.swing.JButton jButtonRecuperar;
     private javax.swing.JButton jButtonRegistrar;
     private javax.swing.JButton jButtonTieneCuenta;
     private javax.swing.JLabel jLabel1;

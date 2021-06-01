@@ -71,7 +71,7 @@ public class MySQL {
             statement.executeUpdate(Query);
             estatus = 1;
         }catch(SQLException e){
-             System.out.println("ERRROR = "+ e.toString());
+             System.out.println("ERRROR insert  = "+ e.toString());
             estatus = 0; // no deberia pasar
             
         }
@@ -124,7 +124,7 @@ public class MySQL {
     
     public Usuario getUser(String nombreTabla , String email){
         Usuario usuario = null;
-        System.out.println("Ingreso datos");
+      //  System.out.println("Ingreso datos");
         try{
             String Query = "SELECT * FROM "+nombreTabla;
             Statement statement = Conexion.createStatement();
@@ -148,7 +148,7 @@ public class MySQL {
         }
         return usuario;
     }
-    public static boolean verificarUsuario (String nombreTabla , String primaryKey){
+    public boolean verificarUsuario (String nombreTabla , String primaryKey){
         boolean existe = false;
         
         try{
@@ -166,6 +166,51 @@ public class MySQL {
         }catch(SQLException e){
             existe  = false;
             System.out.println("Error boolean");
+        }
+        
+        return existe;
+    }
+    
+    public boolean verificarProducto(String nombreTabla , String codigo){
+        boolean existe = false;
+        
+        try{
+            String Query = "SELECT * FROM "+nombreTabla;
+            Statement statement = Conexion.createStatement();
+            ResultSet resultSet;
+            resultSet = statement.executeQuery(Query);
+            
+            while(resultSet.next()){
+                if(resultSet.getString("pro_codigo").equals(codigo)){
+                  existe = true;
+                  break;
+                }
+            }
+        }catch(SQLException e){
+            existe  = false;
+            System.out.println("Error boolean producto ");
+        }
+        
+        return existe;
+    }
+    public boolean verificarProductoUsuario(String nombreTabla , String codigo, String email){
+        boolean existe = false;
+        
+        try{
+            String Query = "SELECT * FROM "+nombreTabla+" WHERE pro_codigo = '"+codigo+"' AND pro_email = '"+ email+"'; ";
+            Statement statement = Conexion.createStatement();
+            ResultSet resultSet;
+            resultSet = statement.executeQuery(Query);
+            
+            while(resultSet.next()){
+                if(resultSet.getString("pro_codigo").equals(codigo) && resultSet.getString("pro_email").equals(email)){
+                  existe = true;
+                  break;
+                }
+            }
+        }catch(SQLException e){
+            existe  = false;
+            System.out.println("Error boolean producto ");
         }
         
         return existe;
@@ -194,6 +239,37 @@ public class MySQL {
         return usuarios;
     }
     
+    
+    public ArrayList getListProducto (String nombreTabla , String email){
+        ArrayList<Producto> productos = new ArrayList<>();
+        
+        try{
+            String Query = "SELECT * FROM "+ nombreTabla+" WHERE " + "pro_email = '"+ email+"';";
+            System.out.println("print email "+ email);
+            System.out.println("query "+ Query);
+          
+                    
+            Statement statement = Conexion.createStatement();
+            ResultSet resultSet;
+            resultSet = statement.executeQuery(Query);
+            
+            while( resultSet.next()){
+                Producto producto = new Producto();
+                producto.setCodigo(resultSet.getString("pro_codigo"));
+                producto.setNombreProducto(resultSet.getString("pro_nombre"));
+                producto.setPrecio(resultSet.getDouble("pro_precio"));
+                producto.setDescripcion(resultSet.getString("pro_descripcion"));
+                producto.setCantidad(resultSet.getString("pro_cantidad"));
+                productos.add(producto);
+            }
+        }catch(SQLException e){
+            System.out.println("error lis my"+ e.toString());
+            productos = null;
+        }
+        
+        
+        return productos;
+    }
     public int updateRecord(String nombreTabla, String email,  String nombre , String apellido, String telefono){
         int estatus = 0;
       
@@ -227,5 +303,61 @@ public class MySQL {
         }
         return estatus;
     }
+    public int deleteProducto (String nombreTabla, String codigo, String email){
+        int estatus = 0;
+        
+        try{
+            String Query = "DELETE FROM " + nombreTabla + " WHERE pro_codigo = '" + codigo + "' AND pro_email = '"+ email +"';";
+            System.out.println(Query);
+            Statement statement = Conexion.createStatement();
+            statement.executeUpdate(Query);
+            estatus = 1;
+        }catch(SQLException e){
+            estatus = 0;
+            System.out.println("delete producto "+ e.toString());
+        }
+        return estatus;
+        
+    }
+    public int updateContraseña (String nombreTabla, String email , String password){
+        
+        
+        int estatus = 0;
+      
+        try{
+               String Query = "UPDATE " + nombreTabla + " SET "
+                    + "usu_password=\"" + password + "\" WHERE usu_email=\"" + email + "\";";
+               Statement statement = Conexion.createStatement();
+               statement.executeUpdate(Query);
+               estatus = 1;
+               
+        }catch(SQLException e){
+            System.out.println("EError update contraseña "+ e.toString());
+            estatus = 0;
+        }
+            
+    return estatus;
+    }
+    
+    public int updateProducto(String nombreTabla, String nombre, String codigo, String email, double precio, String cantidad){
+           
+        int estatus = 0;
+        try{
+               String Query = "UPDATE " + nombreTabla + " SET "
+                    + "pro_nombre=\"" + nombre + "\", "
+                    + "pro_precio=\"" + precio + "\", "
+                    + "pro_cantidad=\"" + cantidad + "\" WHERE pro_codigo = '" + codigo + "' AND pro_email = '"+ email+"';";
+               Statement statement = Conexion.createStatement();
+               statement.executeUpdate(Query);
+               estatus = 1;
+               System.out.println("Query act "+ Query);
+        }catch(SQLException e){
+            System.out.println("error acutalizar producto "+e.toString());
+            estatus = 0;
+        }
+            
+    return estatus;
+    }
+    
 
 }

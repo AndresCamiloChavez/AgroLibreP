@@ -5,7 +5,10 @@
  */
 package agro.pages;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import models.MySQL;
 
 /**
@@ -20,6 +23,7 @@ public class AddProductoPage extends javax.swing.JFrame {
     public AddProductoPage() {
         initComponents();
         this.setLocationRelativeTo(null);
+        soloNumeros(jTextField2);
     }
 
     /**
@@ -349,33 +353,66 @@ public class AddProductoPage extends javax.swing.JFrame {
        String tabla = "producto";
        
        String nombreProducto = jTextField1.getText();
-       double precio = Integer.parseInt(jTextField2.getText());
+       
+       double precio = (!jTextField2.getText().isEmpty())?Integer.parseInt(jTextField2.getText()):0.0;
+       double sinPrecio = 0.0;
        String descripcion = jTextArea1.getText();
        String cantidad = jTextField3.getText();
        String codigo = jTextField4.getText();
        String email = LoginPage.usuario.getEmail();
-       int estado = miDB.inserDataProducto(tabla, nombreProducto, precio, descripcion, cantidad, codigo, email);
+       
         System.out.println("email usuario "+email);
-       if(estado == 1){
-                    jTextField1.setText("");
-                    jTextField2.setText("");
-                    jTextField3.setText("");
-                    jTextField4.setText("");
-                    jTextArea1.setText("");
+        
+        
+   
+       if(!miDB.verificarProducto(tabla, codigo)) {
+           
+           if( !nombreProducto.isEmpty() && !codigo.isEmpty() && precio != sinPrecio){
+           //    System.out.println("precio "+String.valueOf(precio));
+              
+               int estado = miDB.inserDataProducto(tabla, nombreProducto, precio, descripcion, cantidad, codigo, email);
+             if(estado == 1){
+               
+               jTextField1.setText("");
+               jTextField2.setText("");
+               jTextField3.setText("");
+               jTextField4.setText("");
+               jTextArea1.setText("");
                 
-                    JOptionPane.showMessageDialog(this,"Producto aregistrado con exito!! ", "Estado", JOptionPane.INFORMATION_MESSAGE);
+               JOptionPane.showMessageDialog(this,"Producto registrado con exito!! ", "Estado", JOptionPane.INFORMATION_MESSAGE);
                 
             
-                  }else{
+               }else{
             
-                    JOptionPane.showMessageDialog(this,"ERROR, Por favor revisar NO guardo", "Estado", JOptionPane.ERROR_MESSAGE);
-                  }
+               JOptionPane.showMessageDialog(this,"ERROR, Por favor revisar NO guardo", "Estado", JOptionPane.ERROR_MESSAGE);
+               } 
+               
+           }else{
+               JOptionPane.showMessageDialog(this,"ERROR, Hay campos vacios (Codigo,Nombre , Precio)", "Estado", JOptionPane.ERROR_MESSAGE);
+           }
+           
+       }else{
+           JOptionPane.showMessageDialog(this,"ERROR, Ya existe un producto con ese codigo. Intenta de nuevo", "Estado", JOptionPane.ERROR_MESSAGE);
+       }
        
-       
-       
+        
+       miDB.closeConnection();
        
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
+
+    private void soloNumeros(JTextField j){
+        
+      
+        j.addKeyListener(new KeyAdapter(){
+            public void keyTyped (KeyEvent e){
+                char c = e.getKeyChar();
+                if(!Character.isDigit(c)){
+                    e.consume();
+                }  
+            }
+        });
+    }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         LoginPage login = new LoginPage();
         this.setVisible(false);
