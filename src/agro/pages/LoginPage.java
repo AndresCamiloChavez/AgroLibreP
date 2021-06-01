@@ -3,7 +3,10 @@ package agro.pages;
 
 import AppPackage.AnimationClass;
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import models.MySQL;
 import models.Usuario;
 
@@ -23,6 +26,8 @@ public class LoginPage extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         transparenciaButton();
+        soloNumeros(jTextField4);
+        
         
         
     }
@@ -676,6 +681,18 @@ public class LoginPage extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButtonRecuperarActionPerformed
 
+    private void soloNumeros(JTextField j){
+        
+      
+        j.addKeyListener(new KeyAdapter(){
+            public void keyTyped (KeyEvent e){
+                char c = e.getKeyChar();
+                if(!Character.isDigit(c)){
+                    e.consume();
+                }  
+            }
+        });
+    }
     private void senalizacionRojo(javax.swing.JLabel label,javax.swing.JSeparator separator, Color color){
        label.setForeground(color);
        separator.setForeground(color);

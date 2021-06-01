@@ -148,6 +148,33 @@ public class MySQL {
         }
         return usuario;
     }
+    
+    public Producto getProducto (String nombreTabla, String codigo){
+        Producto producto = null;
+      //  System.out.println("Ingreso datos");
+        try{
+            String Query = "SELECT * FROM "+nombreTabla;
+            Statement statement = Conexion.createStatement();
+            ResultSet resultSet;
+            resultSet = statement.executeQuery(Query);
+            
+            while(resultSet.next()){
+                if(resultSet.getString("pro_codigo").equals(codigo)){
+                    producto = new Producto();
+                    producto.setNombreProducto(resultSet.getString("pro_nombre"));
+                    producto.setDescripcion(resultSet.getString("pro_descripcion"));
+                    producto.setPrecio(resultSet.getDouble("pro_precio"));
+                    producto.setCantidad(resultSet.getString("pro_cantidad"));
+              
+                    break;
+                }
+            }
+        }catch(SQLException e){
+            System.out.println("ERRROR = "+ e.toString());
+            producto = null;
+        }
+        return producto;
+    }
     public boolean verificarUsuario (String nombreTabla , String primaryKey){
         boolean existe = false;
         
@@ -246,7 +273,7 @@ public class MySQL {
         try{
             String Query = "SELECT * FROM "+ nombreTabla+" WHERE " + "pro_email = '"+ email+"';";
             System.out.println("print email "+ email);
-            System.out.println("query "+ Query);
+            System.out.println("query 222 "+ Query);
           
                     
             Statement statement = Conexion.createStatement();
@@ -339,20 +366,25 @@ public class MySQL {
     return estatus;
     }
     
-    public int updateProducto(String nombreTabla, String nombre, String codigo, String email, double precio, String cantidad){
+    public int updateProducto(String nombreTabla, String nombre, String codigo, String email, double precio, String cantidad,String descripcion){
            
         int estatus = 0;
+
         try{
                String Query = "UPDATE " + nombreTabla + " SET "
                     + "pro_nombre=\"" + nombre + "\", "
                     + "pro_precio=\"" + precio + "\", "
+                    + "pro_descripcion=\"" + descripcion + "\", "
                     + "pro_cantidad=\"" + cantidad + "\" WHERE pro_codigo = '" + codigo + "' AND pro_email = '"+ email+"';";
                Statement statement = Conexion.createStatement();
                statement.executeUpdate(Query);
                estatus = 1;
-               System.out.println("Query act "+ Query);
+             //  System.out.println("---------------- "+ Query);
+
         }catch(SQLException e){
-            System.out.println("error acutalizar producto "+e.toString());
+            System.out.println("error acutalizar producto " + e.toString());
+            
+            //System.out.println("descripcion " + descripcion);
             estatus = 0;
         }
             
