@@ -54,7 +54,8 @@ public class MySQL {
         return estatus;
     }
     
-    public int inserDataProducto(String nombreTabla , String nombreProducto, double precio, String descripcion , String cantidad, String codigo, String email ){
+    public int inserDataProducto(String nombreTabla , String nombreProducto, double precio, 
+                                String descripcion , int cantidad, String codigo, String email, String categoria){
     
     int estatus = 0;
         try{
@@ -65,7 +66,8 @@ public class MySQL {
                     + "\"" + precio + "\", "
                     + "\"" + descripcion + "\", "
                     + "\"" + cantidad+ "\", "
-                    + "\"" + email+ "\")";
+                    + "\"" + email+ "\", "
+                    + "\"" + categoria+ "\")";
             
             Statement statement = Conexion.createStatement();
             statement.executeUpdate(Query);
@@ -164,8 +166,8 @@ public class MySQL {
                     producto.setNombreProducto(resultSet.getString("pro_nombre"));
                     producto.setDescripcion(resultSet.getString("pro_descripcion"));
                     producto.setPrecio(resultSet.getDouble("pro_precio"));
-                    producto.setCantidad(resultSet.getString("pro_cantidad"));
-              
+                    producto.setCantidad(resultSet.getInt("pro_cantidad"));
+              //   TODO: PUEDA QUE LA CANTIDA TOQUE CONVERTIR INT
                     break;
                 }
             }
@@ -286,7 +288,7 @@ public class MySQL {
                 producto.setNombreProducto(resultSet.getString("pro_nombre"));
                 producto.setPrecio(resultSet.getDouble("pro_precio"));
                 producto.setDescripcion(resultSet.getString("pro_descripcion"));
-                producto.setCantidad(resultSet.getString("pro_cantidad"));
+                producto.setCantidad(resultSet.getInt("pro_cantidad"));
                 productos.add(producto);
             }
         }catch(SQLException e){
@@ -366,7 +368,7 @@ public class MySQL {
     return estatus;
     }
     
-    public int updateProducto(String nombreTabla, String nombre, String codigo, String email, double precio, String cantidad,String descripcion){
+    public int updateProducto(String nombreTabla, String nombre, String codigo, String email, double precio, int cantidad,String descripcion){
            
         int estatus = 0;
 

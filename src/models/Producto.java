@@ -6,7 +6,7 @@ public class Producto {
     private String nombreProducto;
     private double precio;
     private String descripcion;
-    private String cantidad;
+    private int cantidad;
     private String codigo;
     //
     
@@ -39,11 +39,11 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public String getCantidad() {
+    public int getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(String cantidad) {
+    public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
 

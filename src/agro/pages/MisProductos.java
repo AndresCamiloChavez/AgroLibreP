@@ -22,6 +22,7 @@ public class MisProductos extends javax.swing.JFrame {
         jLabel1.setText("Estos son tus productos "+ usuario.getNombre()+" "+usuario.getApellido());
         cargarProductos();
         soloNumeros(jTextField3);
+        soloNumeros(jTextField4);
         
         
     }
@@ -368,7 +369,7 @@ public class MisProductos extends javax.swing.JFrame {
            
            jTextField2.setText(producto.getNombreProducto());
            jTextField3.setText(String.valueOf(producto.getPrecio()));
-           jTextField4.setText(producto.getCantidad());
+           jTextField4.setText(String.valueOf(producto.getCantidad()));
            jTextArea2.setText(producto.getDescripcion());
 
            
@@ -395,7 +396,7 @@ public class MisProductos extends javax.swing.JFrame {
         miDB.MySQLConnection("root", "", "pruebaagro");
         String nombreTabla = "producto";
         String nombre =  jTextField2.getText();
-        String cantidad = jTextField4.getText();
+        int cantidad = Integer.parseInt(jTextField4.getText());
         double precio = (!jTextField3.getText().isEmpty())? Double.parseDouble(jTextField3.getText()):0.0;
         double sinPrecio = 0.0;
         String descripcion = jTextArea2.getText();
@@ -405,7 +406,7 @@ public class MisProductos extends javax.swing.JFrame {
         
         if(miDB.verificarProductoUsuario(nombreTabla, codigo, usuario.getEmail())){
             
-             if( !nombre.isEmpty() && !cantidad.isEmpty() && precio != sinPrecio){
+             if( !nombre.isEmpty() && precio != sinPrecio && cantidad != 0){
               int estatus = miDB.updateProducto(nombreTabla, nombre, codigo,usuario.getEmail(),precio,cantidad,descripcion);
            
             if(estatus == 1){

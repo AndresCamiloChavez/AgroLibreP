@@ -7,6 +7,7 @@ package agro.pages;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import models.MySQL;
@@ -24,6 +25,9 @@ public class AddProductoPage extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         soloNumeros(jTextField2);
+        soloNumeros(jTextField3);
+
+
     }
 
     /**
@@ -55,16 +59,17 @@ public class AddProductoPage extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        jButtonAgregar = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jTextField4 = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
+        jButtonAgregar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -227,14 +232,6 @@ public class AddProductoPage extends javax.swing.JFrame {
                 .addGap(0, 0, 0))
         );
 
-        jButtonAgregar.setForeground(new java.awt.Color(0, 105, 94));
-        jButtonAgregar.setText("Agregar");
-        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAgregarActionPerformed(evt);
-            }
-        });
-
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Codigo");
 
@@ -265,6 +262,13 @@ public class AddProductoPage extends javax.swing.JFrame {
                 .addGap(23, 23, 23))
         );
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Frutas", "Verduras", "Animales", "Lacteos", "Otros" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -272,11 +276,11 @@ public class AddProductoPage extends javax.swing.JFrame {
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButtonAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(42, Short.MAX_VALUE))
-            .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,9 +293,9 @@ public class AddProductoPage extends javax.swing.JFrame {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(jButtonAgregar)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 60, 350, 500));
@@ -349,6 +353,15 @@ public class AddProductoPage extends javax.swing.JFrame {
         jLabel7.setText("jLabel7");
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, -180, 240, 730));
 
+        jButtonAgregar.setForeground(new java.awt.Color(0, 105, 94));
+        jButtonAgregar.setText("Agregar");
+        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 580, 298, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -363,20 +376,25 @@ public class AddProductoPage extends javax.swing.JFrame {
        double precio = (!jTextField2.getText().isEmpty())?Integer.parseInt(jTextField2.getText()):0.0;
        double sinPrecio = 0.0;
        String descripcion = jTextArea1.getText();
-       String cantidad = jTextField3.getText();
+       int cantidad = (jTextField3.getText().isEmpty())? 0 : Integer.parseInt(jTextField3.getText());
+       
        String codigo = jTextField4.getText();
        String email = LoginPage.usuario.getEmail();
        
+       String categoria = String.valueOf(jComboBox1.getSelectedItem());
+       
         System.out.println("email usuario "+email);
+        
+
         
         
    
        if(!miDB.verificarProducto(tabla, codigo)) {
            
-           if( !nombreProducto.isEmpty() && !codigo.isEmpty() && precio != sinPrecio){
+           if( !nombreProducto.isEmpty() && !codigo.isEmpty() && precio != sinPrecio && cantidad != 0){
            //    System.out.println("precio "+String.valueOf(precio));
-              
-               int estado = miDB.inserDataProducto(tabla, nombreProducto, precio, descripcion, cantidad, codigo, email);
+            
+            int estado = miDB.inserDataProducto(tabla, nombreProducto, precio, descripcion, cantidad, codigo, email, categoria);
              if(estado == 1){
                
                jTextField1.setText("");
@@ -394,7 +412,7 @@ public class AddProductoPage extends javax.swing.JFrame {
                } 
                
            }else{
-               JOptionPane.showMessageDialog(this,"ERROR, Hay campos vacios (Codigo,Nombre , Precio)", "Estado", JOptionPane.ERROR_MESSAGE);
+               JOptionPane.showMessageDialog(this,"ERROR, Hay campos vacios (Codigo, Nombre , Precio, Cantidad)", "Estado", JOptionPane.ERROR_MESSAGE);
            }
            
        }else{
@@ -435,6 +453,12 @@ public class AddProductoPage extends javax.swing.JFrame {
         productos.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+       
+        
+        
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -474,6 +498,7 @@ public class AddProductoPage extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAgregar;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
