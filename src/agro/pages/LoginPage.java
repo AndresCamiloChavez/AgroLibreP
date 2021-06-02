@@ -569,7 +569,8 @@ public class LoginPage extends javax.swing.JFrame {
         String password = jPasswordRegister.getText();
         
         boolean existe = miDB.verificarUsuario(tabla, email);
-        
+         jLabel11.setForeground(colorLetra);
+                jSeparator8.setForeground(colorPrimario);
         if(!nombre.isEmpty() && !apellido.isEmpty() && !telefono.isEmpty() && !email.isEmpty() && !password.isEmpty()){
             if(!existe){
             int estado = miDB.insertData(tabla, nombre, apellido, email, password, telefono);    
@@ -578,7 +579,8 @@ public class LoginPage extends javax.swing.JFrame {
             
             jLabel12.setForeground(colorLetra);
             jSeparator7.setForeground(colorPrimario);
-            
+            jLabel2.setForeground(colorLetra);
+            jSeparator5.setForeground(colorPrimario);
               if(telefono.length() <= 10){
                 jLabel11.setForeground(colorLetra);
                 jSeparator8.setForeground(colorPrimario);
